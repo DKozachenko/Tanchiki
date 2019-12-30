@@ -1,0 +1,239 @@
+ch := readkey();
+          case ch of
+            left :
+              begin
+                SetFillStyle(1, black);
+                Bar(xTank, yTank, xTank + shTank, yTank + vsTank);
+
+                if (dirTank <> 4) then
+                  begin
+                    PutImage(xTank, yTank, tankLeft^, 1);
+                    dirTank := 4;
+                  end
+                else
+                begin
+                  dirTank := 4;
+
+                  colWay := false;
+
+                  for i := 1 to vsTank + 1 do
+                    begin
+                      pixelCur := getpixel(xTank - 1, yTank + i);
+                      if ((pixelCur = 4) or (pixelCur = 91) or (pixelCur = 42) or (pixelCur = 25) or (pixelCur = 15))
+                      then
+                        colWay := true
+                      else if ((pixelCur = 21) or (pixelCur = 22) or (pixelCur = 23) or (pixelCur = 24) or
+                      (pixelCur = 26) or (pixelCur = 27) or (pixelCur = 28) or (pixelCur = 29) or
+                      (pixelCur = 30) or (pixelCur = 18)) then
+                        begin
+                          xTank := getmaxx - 50 - 60;
+                          yTank := 50 + random(getmaxy - 50 - 60);
+
+                          kLifes := kLifes - 1;
+                          Str(kLifes, kLifesStr);
+                          SetFillStyle(1, 25);
+                          Bar(200, 120, 220, 145);
+                          Count;
+                        end
+                      else if (pixelCur = 39) then
+                      //Noieeiiaaiea n aiionii
+                        begin
+                          SetFillStyle(1, black);
+                          Bar(xLife, yLife, xLife + 60, yLife + 60);
+                          xLife := getmaxx - 50 - 60;
+                          yLife := 50 + random(getmaxy - 50 - 60);
+                          PutImage(xLife, yLife, apple^, 1);
+
+                          kLifes := kLifes + 1;
+                          Str(kLifes, kLifesStr);
+                          SetFillStyle(1, 25);
+                          Bar(200, 120, 220, 145);
+                          Count;
+                        end;
+                    end;
+
+                  if (colWay = false) then
+                    xTank := xTank - hTank;
+
+                  PutImage(xTank, yTank, tankLeft^, 1);
+
+                  put := 'pTankLeft^';
+                end;
+              end;
+            right:
+              begin
+                SetFillStyle(1, black);
+                Bar(xTank, yTank, xTank + shTank, yTank + vsTank);
+
+                if (dirTank <> 2) then
+                  begin
+                    PutImage(xTank, yTank, tankRight^, 1);
+                    dirTank := 2;
+                  end
+                else
+                  begin
+                    dirTank := 2;
+
+                    colWay := false;
+
+                    for i := 1 to vsTank + 1 do
+                      begin
+                        pixelCur := getpixel(xTank + shTank + 1, yTank + i);
+                        if ((pixelCur = 4) or (pixelCur = 91) or (pixelCur = 42) or (pixelCur = 25) or
+                        (pixelCur = 15)) then
+                            colWay := true
+                        else if ((pixelCur = 21) or (pixelCur = 22) or (pixelCur = 23) or (pixelCurPula = 24)
+                        or (pixelCur = 26) or (pixelCur = 27) or (pixelCur = 28) or (pixelCur = 29) or
+                        (pixelCur = 30) or (pixelCur = 18)) then
+                          begin
+                            xTank := 250;
+                            yTank := getmaxy - 50 - vsTank;
+
+                            kLifes := kLifes - 1;
+                            Str(kLifes, kLifesStr);
+                            SetFillStyle(1, 25);
+                            Bar(200, 120, 220, 145);
+                            Count;
+                          end
+                        else if (pixelCur = 39) then
+                        //Noieeiiaaiea n aiionii
+                          begin
+                            SetFillStyle(1, black);
+                            Bar(xLife, yLife, xLife + 60, yLife + 60);
+                            xLife := 250;
+                            yLife := 50 + random(getmaxy - 50 - 60);
+                            PutImage(xLife, yLife, apple^, 1);
+
+                            kLifes := kLifes + 1;
+                            Str(kLifes, kLifesStr);
+                            SetFillStyle(1, 25);
+                            Bar(200, 120, 220, 145);
+                            Count;
+                          end;
+                      end;
+
+                     if (not colWay) then
+                       xTank := xTank + hTank;
+
+                     PutImage(xTank, yTank, tankRight^, 1);
+
+                     put := 'pTankRight^';
+                  end;
+              end;
+            up:
+              begin
+                SetFillStyle(1, black);
+                Bar(xTank, yTank, xTank + shTank, yTank + vsTank);
+
+                if (dirTank <> 1) then
+                  begin
+                    PutImage(xTank, yTank, tankForward^, 1);
+                    dirTank := 1;
+                  end
+                else
+                  begin
+                    dirTank := 1;
+                    colWay := false;
+
+                    for i := 1 to shTank + 1 do
+                      begin
+                        pixelCur := getpixel(xTank + i, yTank - 1);
+                        if ((pixelCur = 4) or (pixelCur = 91) or (pixelCur = 42) or (pixelCur = 25) or
+                        (pixelCur = 15)) then
+                          colWay := true
+                        else if ((pixelCur = 21) or (pixelCur = 22) or (pixelCur = 23) or (pixelCur = 24)
+                        or (pixelCur = 26) or (pixelCur = 27) or (pixelCur = 28) or (pixelCur = 29) or
+                        (pixelCur = 30) or (pixelCur = 18)) then
+                          begin
+                            xTank := 250;
+                            yTank := getmaxy - 50 - vsTank;
+
+                            kLifes := kLifes - 1;
+                            Str(kLifes, kLifesStr);
+                            SetFillStyle(1, 25);
+                            Bar(200, 120, 220, 145);
+                            Count;
+                          end
+                        else if (pixelCur = 39) then
+                        //Noieeiiaaiea n aiionii
+                          begin
+                            SetFillStyle(1, black);
+                            Bar(xLife, yLife, xLife + 60, yLife + 60);
+                            xLife := 250 + random(getmaxx - 50 - 60 - 250);
+                            yLife := getmaxy - 50 - 60;
+                            PutImage(xLife, yLife, apple^, 1);
+
+                            kLifes := kLifes + 1;
+                            Str(kLifes, kLifesStr);
+                            SetFillStyle(1, 25);
+                            Bar(200, 120, 220, 145);
+                            Count;
+                          end;
+                      end;
+
+                    if (not colWay) then
+                     yTank := yTank - hTank;
+
+                    PutImage(xTank, yTank, tankForward^, 1);
+                    put := 'pTankForward^';
+                  end;
+              end;
+            down:
+              begin
+                SetFillStyle(1, black);
+                Bar(xTank, yTank, xTank + shTank, yTank + vsTank);
+
+                if (dirTank <> 3) then
+                  begin
+                    PutImage(xTank, yTank, tankBack^, 1);
+                    dirTank := 3;
+                  end
+                else
+                  begin
+                    colWay := false;
+
+                    for i := 1 to shTank + 1 do
+                      begin
+                        pixelCur := getpixel(xTank + i, yTank + vsTank + 1);
+                        if ((pixelCur = 4) or (pixelCur = 91) or (pixelCur = 42) or (pixelCur = 25) or
+                        (pixelCur = 15)) then
+                          colWay := true
+                        else if ((pixelCur = 21) or (pixelCur = 22) or (pixelCur = 23) or
+                        (pixelCur = 24) or (pixelCur = 26) or (pixelCur = 27) or (pixelCur = 28) or (pixelCur = 29)
+                        or (pixelCur = 30) or (pixelCur = 18)) then
+                        //Caaca ia a?aaa
+                          begin
+                            xTank := 250;
+                            yTank := getmaxy - 50 - vsTank;
+
+                            kLifes := kLifes - 1;
+                            Str(kLifes, kLifesStr);
+                            SetFillStyle(1, 25);
+                            Bar(200, 120, 220, 145);
+                            Count;
+                          end
+                        else if (pixelCur = 39) then
+                        //Noieeiiaaiea n aiionii
+                          begin
+                            SetFillStyle(1, black);
+                            Bar(xLife, yLife, xLife + 60, yLife + 60);
+                            xLife := 250 + random(getmaxx - 50 - 60 - 250);
+                            yLife := 50;
+                            PutImage(xLife, yLife, apple^, 1);
+
+                            kLifes := kLifes + 1;
+                            Str(kLifes, kLifesStr);
+                            SetFillStyle(1, 25);
+                            Bar(200, 120, 220, 145);
+                            Count;
+                          end;
+                      end;
+
+                    if (not colWay) then
+                      yTank := yTank + hTank;
+
+                    PutImage(xTank, yTank, tankBack^, 1);
+                    put := 'pTankBack^';
+                  end;
+               end;
+             end;
