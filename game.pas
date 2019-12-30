@@ -17,12 +17,13 @@ xTank, yTank, hTank, vsTank, shTank, shStenaVert, vsStenaVert,
 shKursor, vsKursor, np,
 xStenaVert, yStenaVert,
 shPula, vsPula, hPula,
-sh, vs, i: integer;
+shBase, vsBase, xBase, yBase, shStenaVertSmall, vsStenaVertSmall, vsBlock, shBlock,
+sh, vs, i, dirTank: integer;
 pTankForward, pTankBack, pTankLeft, pTankRight,
-stenaVert, stenaKrug: pointer;
+stenaVert, stenaVertSmall, stenaVertSmall2, stenaBlock, stenaGorizSmall, base: pointer;
 ch:char;
 put: string;
-xPula, yPula: array[1..n] of integer; animPula: array[1..n] of AnimatType; pulaLog: array[1..n] of boolean;
+xPula, yPula, dirPula: array[1..n] of integer; animPula: array[1..n] of AnimatType; pulaLog: array[1..n] of boolean;
 animKursor: AnimatType;
 pixelCur: longint;
 
@@ -64,24 +65,40 @@ procedure initData;
     xTank := 500;
     yTank := 500;
 
-    xStenaVert := (getmaxx - 30 - 400) div 3;
-    yStenaVert := (getmaxy - 30 - 30) div 7;
+    xStenaVert := 325;
+    yStenaVert := 130;
 
-    vsStenaVert := 298;
+    vsStenaVert := 266;
     shStenaVert := 66;
+
+    shBlock := 71;
+    vsBlock := 66;
+
+    shStenaVertSmall := 66;
+    vsStenaVertSmall := 217;
 
     shPula := 10;
     vsPula := 10;
+
+    dirTank := 1;
 
     for i := 1 to n do
       begin
         xPula[i] := getmaxx;
         yPula[i] := getmaxy;
         PulaLog[i] := false;
+
+        //dirPula[i] := dirTank;
       end;
 
     vsTank := 65;
     shTank := 65;
+
+    xBase := 710;
+    yBase := getmaxy - 50;
+
+    shBase := 73;
+    vsBase := 66;
 
     hTank := 5;
     hPula := 5;
@@ -89,6 +106,8 @@ procedure initData;
     shKursor := 126;
     vsKursor := 54;
     np := 1;
+
+
   end;
 
 procedure initPict;
@@ -109,7 +128,22 @@ procedure initPict;
     stenaVert := loader('G:\pascal\game\images\stenaVert.bmp');
 
     //stenaVert := loader('C:\FPC\3.0.4\pascal\game\images\stenaVert.bmp');
-    stenaKrug := loader('G:\pascal\game\images\stenaKrug.bmp');
+    stenaVertSmall := loader('G:\pascal\game\images\stenaVertSmall.bmp');
+
+    //stenaVert := loader('C:\FPC\3.0.4\pascal\game\images\stenaVert.bmp');
+    stenaVertSmall2 := loader('G:\pascal\game\images\stenaVertSmall2.bmp');
+
+    //stenaVert := loader('C:\FPC\3.0.4\pascal\game\images\stenaVert.bmp');
+    stenaBlock := loader('G:\pascal\game\images\stenaBlock.bmp');
+
+    //stenaVert := loader('C:\FPC\3.0.4\pascal\game\images\stenaVert.bmp');
+    stenaGorizSmall := loader('G:\pascal\game\images\stenaGorizSmall.bmp');
+
+    //stenaVert := loader('C:\FPC\3.0.4\pascal\game\images\stenaVert.bmp');
+    base := loader('G:\pascal\game\images\base.bmp');
+
+    //stenaVert := loader('C:\FPC\3.0.4\pascal\game\images\stenaVert.bmp');
+    //stenaKrug := loader('G:\pascal\game\images\stenaKrug.bmp');
 
     //newAnim(shKursor, vsKursor, 'C:\FPC\3.0.4\pascal\game\images\menuKursor.bmp', animKursor, black);
     newAnim(shKursor, vsKursor, 'G:\pascal\game\images\menuKursor.bmp', animKursor, black);
@@ -119,6 +153,8 @@ procedure initPict;
   end;
 
 procedure UprTank(var xTank, yTank: integer; shTank, vsTank, hTank: integer);
+var colWay: boolean;
+i: integer;
   begin
       ch := readkey();
 
@@ -128,15 +164,19 @@ procedure UprTank(var xTank, yTank: integer; shTank, vsTank, hTank: integer);
                 SetFillStyle(1, black);
                 Bar(xTank, yTank, xTank + shTank, yTank + vsTank);
 
-                xTank := xTank - hTank;
+                dirTank := 4;
+                //dirPula[i] := dirTank;
+                colWay := false;
 
-                pixelCur := getpixel(xTank - 1, yTank);
+                for i := 1 to vsTank + 1 do
+                  begin
+                    pixelCur := getpixel(xTank - 1, yTank + i);
+                    if ((pixelCur = 25) or (pixelCur = 91) or (pixelCur = 29) or (pixelCur = 42)) then
+                      colWay := true;
+                  end;
 
-                if (pixelCur = 25) then
-                  xTank := 200
-                else if (pixelCur = 42) then
-                  xTank := xTank + 1;
-
+                 if not colWay then
+                   xTank := xTank - hTank;
 
 
                 PutImage(xTank, yTank, pTankLeft^, 1);
@@ -148,15 +188,34 @@ procedure UprTank(var xTank, yTank: integer; shTank, vsTank, hTank: integer);
                 SetFillStyle(1, black);
                 Bar(xTank, yTank, xTank + shTank, yTank + vsTank);
 
-                xTank := xTank + hTank;
+                if dirTank <> 2 then
+                  begin
+                    PutImage(xTank, yTank, pTankRight^, 1);
+                    dirTank := 2;
+                  end
+                else
+                  begin
+                    dirTank := 2;
+                //dirPula[i] := dirTank;
 
-                pixelCur := getpixel(xTank + shTank + 1, yTank);
+                colWay := false;
 
-                if (pixelCur = 25) then
-                  xTank := getmaxx - 30 - shTank;
+                for i := 1 to vsTank + 1 do
+                  begin
+                    pixelCur := getpixel(xTank + shTank + 1, yTank + i);
+                    if ((pixelCur = 25) or (pixelCur = 91) or (pixelCur = 29) or (pixelCur = 42)) then
+                      colWay := true;
+                  end;
 
-                PutImage(xTank, yTank, pTankRight^, 1);
+                 if not colWay then
+                   xTank := xTank + hTank;
+
+
                 put := 'pTankRight^';
+                  end;
+
+
+
 
               end;
 
@@ -167,6 +226,9 @@ procedure UprTank(var xTank, yTank: integer; shTank, vsTank, hTank: integer);
                 Bar(xTank, yTank, xTank + shTank, yTank + vsTank);
 
                 yTank := yTank - hTank;
+
+                dirTank := 1;
+                //dirPula := dirTank;
 
                 pixelCur := getpixel(xTank, yTank - 1);
 
@@ -184,6 +246,9 @@ procedure UprTank(var xTank, yTank: integer; shTank, vsTank, hTank: integer);
                 Bar(xTank, yTank, xTank + shTank, yTank + vsTank);
 
                 yTank := yTank + hTank;
+
+                dirTank := 3;
+                //dirPula := dirTank;
 
                 pixelCur := getpixel(xTank, yTank + shTank + 1);
 
@@ -203,9 +268,15 @@ procedure poletPuli(var xPula,yPula: integer; hPula:integer; animPula: AnimatTyp
   begin
     PutAnim(xPula,yPula,animPula,BkgPut);
 
-    yPula := yPula - hPula;
+    case dirPula[i] of
+      1: yPula := yPula - hPula;
+      2: xPula := xPula + hPula;
+      3: yPula := yPula + hPula;
+      4: xPula := xPula - hPula;
+    end;
 
-    if (yPula <= 0) then
+
+    if ((yPula <= 0) or (yPula > getmaxy) or (xPula < 0) or (xPula > getmaxx)) then
       pulaLog[i] := false
     else
       PutAnim(xPula,yPula,animPula,TransPut);
@@ -221,15 +292,40 @@ procedure gamePole;
     Bar(0, 0, getmaxx, getmaxy);
 
     SetFillStyle(1, black);
-    Bar(200, 30, getmaxx - 30, getmaxy - 30);
+    Bar(250, 50, getmaxx - 50, getmaxy - 50);
 
 
     PutImage(xStenaVert, yStenaVert, StenaVert^, 1);
-    PutImage(xStenaVert + 150, yStenaVert, StenaVert^, 1);
-    PutImage(xStenaVert + 300, yStenaVert, StenaVert^, 1);
-    PutImage(xStenaVert + 425, yStenaVert, StenaKrug^, 1);
-    PutImage(xStenaVert + 700, yStenaVert, StenaVert^, 1);
-    PutImage(xStenaVert + 850, yStenaVert, StenaVert^, 1);
+    PutImage(xStenaVert + 145, yStenaVert, StenaVert^, 1);
+
+    PutImage(xStenaVert + 290, yStenaVert, stenaVertSmall^, 1);
+    PutImage(xStenaVert + 290 + 66, yStenaVert + 120, stenaBlock^, 1);
+    PutImage(xStenaVert + 290 + 66 + 71, yStenaVert + 120, stenaBlock^, 1);
+    PutImage(xStenaVert + 66 + 432, yStenaVert, stenaVertSmall^, 1);
+
+    PutImage(xStenaVert + 577 + shBlock, yStenaVert, StenaVert^, 1);
+    PutImage(xStenaVert + 722 + shBlock, yStenaVert, StenaVert^, 1);
+
+    //Второй ряд
+
+    PutImage(xStenaVert, yStenaVert + vsStenaVert + 75, stenaVertSmall2^, 1);
+    PutImage(xStenaVert + 145, yStenaVert + vsStenaVert + 75, stenaVertSmall2^, 1);
+
+    PutImage(xStenaVert + 290, yStenaVert + vsStenaVertSmall + 80, stenaGorizSmall^, 1);
+    PutImage(xStenaVert + 290 + 66, yStenaVert + vsStenaVertSmall + 180, stenaBlock^, 1);
+    PutImage(xStenaVert + 290 + 66 + shBlock, yStenaVert + vsStenaVertSmall + 180, stenaBlock^, 1);
+    PutImage(xStenaVert + 66 + 432, yStenaVert + vsStenaVertSmall + 80, stenaGorizSmall^, 1);
+
+    PutImage(xStenaVert + 577 + shBlock, yStenaVert + vsStenaVert + 75, stenaVertSmall2^, 1);
+    PutImage(xStenaVert + 722 + shBlock, yStenaVert + vsStenaVert + 75, stenaVertSmall2^, 1);
+
+    //Отрисовываю базу
+    PutImage(xBase - 71, yBase - 66, stenaGorizSmall^, 1);
+    PutImage(xBase - 71, yBase - 66 * 2, stenaGorizSmall^, 1);
+    PutImage(xBase, yBase - 66 * 2, stenaGorizSmall^, 1);
+    PutImage(xBase + 71, yBase - 66 * 2, stenaGorizSmall^, 1);
+    PutImage(xBase + 71, yBase - 66, stenaGorizSmall^, 1);
+    PutImage(xBase, yBase - vsBase, base^, 1);
 
     PutImage(xTank, yTank, pTankForward^, 1);
   end;
@@ -250,8 +346,41 @@ procedure game;
             begin
               if (PulaLog[i] = false) then
                 begin
-                  xPula[i] := xTank + shTank div 2 - 4;
-                  yPula[i] := yTank;
+                  //Каждой пули прописываю собственное направление в зависимости от направления танка
+                  dirPula[i] := dirTank;
+                  case dirPula[i] of
+                    1:
+                      begin
+                        xPula[i] := xTank + shTank div 2 - 4;
+                        yPula[i] := yTank;
+
+                        //yPula[i] := yPula[i] - hPula;
+                      end;
+
+                    2:
+                      begin
+                        yPula[i] := yTank + vsTank div 2 - 4;
+                        xPula[i] := xTank + shTank;
+
+                        //xPula[i] := xPula[i] + hPula;
+                      end;
+
+                    3:
+                      begin
+                        xPula[i] := xTank + shTank div 2 - 4;
+                        yPula[i] := yTank + vsTank;
+
+                        //yPula[i] := yPula[i] + hPula;
+                      end;
+                    4:
+                      begin
+                        yPula[i] := yTank + vsTank div 2 - 4;
+                        xPula[i] := xTank;
+
+                        //xPula[i] := xPula[i] - hPula;
+                      end;
+                  end;
+
                   PutAnim(xPula[i], yPula[i], animPula[i], TransPut);
                   PulaLog[i] := true;
                   break;
@@ -316,12 +445,13 @@ procedure Menu;
 
 
 BEGIN
+//clrscr;
 SetWindowSize(1300, 800);
 gd := d8bit;
 //gd := 9;
 //gm := 11;
 gm := mCustom;
-InitGraph(gd, gm, 'Ball');
+InitGraph(gd, gm, 'Tank');
 initData;
 initPict;
 
