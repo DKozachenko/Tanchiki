@@ -10,6 +10,7 @@ esc = #27;
 enter = #13;
 probel = #32;
 tab = #9;
+dirFile = 'G:\pascal\game\images\';
 
 n = 15;
 
@@ -26,13 +27,13 @@ sh, vs, i, k, l, dirTank, //Другие переменные
 kLevel, kLifes, kEnemies: integer; //Переменные счетчика
 tankForward, tankBack, tankLeft, tankRight, //Картинки танка
 enemyForward, enemyRight, enemyLeft, enemyBack, //Картинки врага
-stenaVert, stenaVertSmall, stenaVertSmall2, stenaBlock, stenaGorizSmall, base, //Картинки разных стен, блока и базы
+stenaVert, stenaVertSmall, stenaVertSmall2, stenaBlock, stenaGorizSmall, //Картинки разных стен, блока
 menuBg, warningText, apple: pointer; //Фон в меню
 ch:char; //Считыватель клавиши
 put, kLifesStr, kEnemiesStr, kLevelStr: string; //Переменные строковые для счетчика
 xPula, yPula, dirPula: array[1..n] of integer; animPula: array[1..n] of AnimatType; pulaLog: array[1..n] of boolean;
 //Массивы для пуль
-animKursor, helpText, explode: AnimatType; //Переменные для анимации курсора и пункта Помощь
+animKursor, helpText: AnimatType; //Переменные для анимации курсора и пункта Помощь
 pixelCur, pixelCurPula, pixelCurEnemy: longint; //Считыватель следующего пикселя
 EnemyExist, tankExist: boolean;
 
@@ -120,51 +121,26 @@ procedure initData;
 
 procedure initPict;
   begin
-    tankForward := loader('G:\pascal\game\images\tankForward.bmp');
-    //tankForward := loader('C:\FPC\3.0.4\pascal\game\images\tankForward.bmp');
-    tankBack := loader('G:\pascal\game\images\tankBack.bmp');
-    //tankBack := loader('C:\FPC\3.0.4\pascal\game\images\tankBack.bmp');
-    tankLeft := loader('G:\pascal\game\images\tankLeft.bmp');
-    //tankLeft := loader('C:\FPC\3.0.4\pascal\game\images\tankLeft.bmp');
-    tankRight := loader('G:\pascal\game\images\tankRight.bmp');
-    //tankRight := loader('C:\FPC\3.0.4\pascal\game\images\tankRight.bmp');
-    enemyForward := loader('G:\pascal\game\images\enemyForward.bmp');
-    //enemyForward := loader('C:\FPC\3.0.4\pascal\game\images\enemyForward.bmp');
-    enemyLeft := loader('G:\pascal\game\images\enemyLeft.bmp');
-    //enemyLeft := loader('C:\FPC\3.0.4\pascal\game\images\enemyLeft.bmp');
-    enemyBack := loader('G:\pascal\game\images\enemyBack.bmp');
-    //enemyBack := loader('C:\FPC\3.0.4\pascal\game\images\enemyBack.bmp');
-    enemyRight := loader('G:\pascal\game\images\enemyRight.bmp');
-    //enemyRight := loader('C:\FPC\3.0.4\pascal\game\images\enemyRight.bmp');
-    stenaVert := loader('G:\pascal\game\images\stenaVert.bmp');
-    //stenaVert := loader('C:\FPC\3.0.4\pascal\game\images\stenaVert.bmp');
-    //stenaVertSmall := loader('C:\FPC\3.0.4\pascal\game\images\stenaVertSmall.bmp');
-    stenaVertSmall := loader('G:\pascal\game\images\stenaVertSmall.bmp');
-    //stenaVertSmall2 := loader('C:\FPC\3.0.4\pascal\game\images\stenaVertSmall2.bmp');
-    stenaVertSmall2 := loader('G:\pascal\game\images\stenaVertSmall2.bmp');
-    //stenaBlock := loader('C:\FPC\3.0.4\pascal\game\images\stenaBlock.bmp');
-    stenaBlock := loader('G:\pascal\game\images\stenaBlock.bmp');
-    //stenaGorizSmall := loader('C:\FPC\3.0.4\pascal\game\images\stenaGorizSmall.bmp');
-    stenaGorizSmall := loader('G:\pascal\game\images\stenaGorizSmall.bmp');
-    //menuBg := loader('C:\FPC\3.0.4\pascal\game\images\menuBg2.bmp');
-    menuBg := loader('G:\pascal\game\images\menuBg2.bmp');
-    //warningText := loader('C:\FPC\3.0.4\pascal\game\images\warningText.bmp');
-    warningText := loader('G:\pascal\game\images\warningText.bmp');
-    //apple := loader('C:\FPC\3.0.4\pascal\game\images\apple.bmp');
-    apple := loader('G:\pascal\game\images\apple.bmp');
-    //explode := loader('C:\FPC\3.0.4\pascal\game\images\explode.bmp');
-    //explode := loader('G:\pascal\game\images\explode.bmp');
-    //newAnim(shKursor, vsKursor, 'C:\FPC\3.0.4\pascal\game\images\menuKursor2.bmp', animKursor, black);
-    newAnim(shKursor, vsKursor, 'G:\pascal\game\images\menuKursor2.bmp', animKursor, black);
-    newAnim(492, 340, 'G:\pascal\game\images\help.bmp', helpText, white);
-
-    //newAnim(492, 340, 'C:\FPC\3.0.4\pascal\game\images\help.bmp', helpText, white);
-    newAnim(19, 19, 'G:\pascal\game\images\explode.bmp', explode, black);
+    tankForward := loader(dirFile + 'tankForward.bmp');
+    tankBack := loader(dirFile + 'tankBack.bmp');
+    tankLeft := loader(dirFile + 'tankLeft.bmp');
+    tankRight := loader(dirFile + 'tankRight.bmp');
+    enemyForward := loader(dirFile + 'enemyForward.bmp');
+    enemyLeft := loader(dirFile + 'enemyLeft.bmp');
+    enemyBack := loader(dirFile + 'enemyBack.bmp');
+    enemyRight := loader(dirFile + 'enemyRight.bmp');
+    stenaVert := loader(dirFile + 'stenaVert.bmp');
+    stenaVertSmall := loader(dirFile + 'stenaVertSmall.bmp');
+    stenaVertSmall2 := loader(dirFile + 'stenaVertSmall2.bmp');
+    stenaBlock := loader(dirFile + 'stenaBlock.bmp');
+    stenaGorizSmall := loader(dirFile + 'stenaGorizSmall.bmp');
+    menuBg := loader(dirFile + 'menuBg2.bmp');
+    warningText := loader(dirFile + 'warningText.bmp');
+    apple := loader(dirFile + 'apple.bmp');
+    newAnim(shKursor, vsKursor, dirFile + 'menuKursor2.bmp', animKursor, black);
+    newAnim(492, 340, dirFile + 'help.bmp', helpText, white);
     for i := 1 to n do
-      newAnim(shPula, vsPula, 'G:\pascal\game\images\pula.bmp', animPula[i], black);
-    //for i := 1 to n do
-      //newAnim(shPula, vsPula, 'C:\FPC\3.0.4\pascal\game\images\pula.bmp', animPula[i], black);
-
+      newAnim(shPula, vsPula, dirFile + 'pula.bmp', animPula[i], black);
   end;
 
 procedure Help;
@@ -236,8 +212,7 @@ procedure Count;
 
     outtextxy(45, 210, 'Level');
     outTextXY(200, 213, kLevelStr);
-    writeln(kEnemies);
-    writeln(kLifes);
+
     if (kEnemies = 2) then
       begin
         EnemyExist := false;
@@ -268,12 +243,19 @@ procedure Enemy(var xEnemy, yEnemy: integer; hEnemy: integer);
                   pixelCurEnemy := getpixel(xEnemy + l, yEnemy - 1);
                   if ((pixelCurEnemy = 90) or (pixelCurEnemy = 140) or (pixelCurEnemy = 7) or (pixelCurEnemy = 43) or
                   (pixelCurEnemy = 66)) then
+                  //Встреча с танком
                     begin
                       SetFillStyle(1, black);
-                      Bar(xEnemy, yEnemy, xEnemy - shTank + 3, yEnemy - shTank);
+                      Bar(xEnemy, yEnemy, xEnemy + shTank, yEnemy - shTank);
                       xTank := 250;
                       yTank := getmaxy - 50 - vsTank;
                       PutImage(xTank, yTank, tankForward^, 1);
+
+                      kLifes := kLifes - 1;
+                      Str(kLifes, kLifesStr);
+                      SetFillStyle(1, 25);
+                      Bar(200, 120, 220, 145);
+                      Count;
                     end
                   else if (pixelCurEnemy = 39) then
                   //Столкновение с бонусом
@@ -326,15 +308,22 @@ procedure Enemy(var xEnemy, yEnemy: integer; hEnemy: integer);
                 for l := 1 to vsEnemy + 1 do
                 begin
                   pixelCurEnemy := getpixel(xEnemy + shEnemy + 1, yEnemy + l);
-                  //writeln(pixelCurEnemy);
                   if ((pixelCurEnemy = 90) or (pixelCurEnemy = 140) or (pixelCurEnemy = 7) or (pixelCurEnemy = 43) or
                   (pixelCurEnemy = 66)) then
+                  //Встреча с танком
                     begin
+                      writeln(pixelCurEnemy);
                       SetFillStyle(1, black);
-                      Bar(xEnemy + shEnemy, yEnemy, xEnemy + shEnemy + shTank + 3, yEnemy + shTank);
+                      Bar(xEnemy + shEnemy, yEnemy, xEnemy + shEnemy + shTank, yEnemy + shTank);
                       xTank := 250;
                       yTank := getmaxy - 50 - vsTank;
                       PutImage(xTank, yTank, tankForward^, 1);
+
+                      kLifes := kLifes - 1;
+                      Str(kLifes, kLifesStr);
+                      SetFillStyle(1, 25);
+                      Bar(200, 120, 220, 145);
+                      Count;
                     end
                   else if (pixelCurEnemy = 39) then
                   //Столкновение с бонусом
@@ -360,13 +349,13 @@ procedure Enemy(var xEnemy, yEnemy: integer; hEnemy: integer);
                 dirEnemy := 1
                 else if (xEnemy + vsEnemy >= getmaxx - 45) then  //Правая стена
                 dirEnemy := 1 + random(5 - 1)
-                else if ((xEnemy = xStenaVert + shStenaVert) and (yEnemy = 50)) then //1 Стоп-точка
+                else if ((xEnemy = xStenaVert + shStenaVert) and (yEnemy <= 50)) then //1 Стоп-точка
                 dirEnemy := 1 + random(5 - 1)
-                else if ((xEnemy = xStenaVert + 145 + shStenaVert) and (yEnemy = 50)) then //2 Стоп-точка
+                else if ((xEnemy = xStenaVert + 145 + shStenaVert) and (yEnemy <= 50)) then //2 Стоп-точка
                 dirEnemy := 1 + random(5 - 1)
-                else if ((xEnemy = xStenaVert + 577 + shBlock - 70) and (yEnemy = 50)) then //3 Стоп-точка
+                else if ((xEnemy = xStenaVert + 577 + shBlock - 70) and (yEnemy <= 50)) then //3 Стоп-точка
                 dirEnemy := 1 + random(5 - 1)
-                else if ((xEnemy = xStenaVert + 720 + shBlock - 70) and (yEnemy = 50)) then //4 Стоп-точка
+                else if ((xEnemy = xStenaVert + 720 + shBlock - 70) and (yEnemy <= 50)) then //4 Стоп-точка
                 dirEnemy := 1 + random(5 - 1)
                 else if ((xEnemy = xStenaVert + 720 + shBlock + shStenaVert) and (yEnemy = yStenaVert + vsStenaVert))
                 then //5 Стоп-точка
@@ -406,12 +395,19 @@ procedure Enemy(var xEnemy, yEnemy: integer; hEnemy: integer);
                   pixelCurEnemy := getpixel(xEnemy + l, yEnemy + vsEnemy + 1);
                   if ((pixelCurEnemy = 90) or (pixelCurEnemy = 140) or (pixelCurEnemy = 7) or (pixelCurEnemy = 43) or
                   (pixelCurEnemy = 66)) then
+                  //Встреча с танком
                     begin
                       SetFillStyle(1, black);
-                      Bar(xEnemy, yEnemy + vsEnemy, xEnemy + shTank + 3, yEnemy + vsEnemy + shTank);
+                      Bar(xEnemy, yEnemy + vsEnemy, xEnemy + shTank, yEnemy + vsEnemy + shTank);
                       xTank := 250;
                       yTank := getmaxy - 50 - vsTank;
                       PutImage(xTank, yTank, tankForward^, 1);
+
+                      kLifes := kLifes - 1;
+                      Str(kLifes, kLifesStr);
+                      SetFillStyle(1, 25);
+                      Bar(200, 120, 220, 145);
+                      Count;
                     end
                   else if (pixelCurEnemy = 39) then
                   //Столкновение с бонусом
@@ -466,12 +462,19 @@ procedure Enemy(var xEnemy, yEnemy: integer; hEnemy: integer);
                   pixelCurEnemy := getpixel(xEnemy - 1, yEnemy + l);
                   if ((pixelCurEnemy = 90) or (pixelCurEnemy = 140) or (pixelCurEnemy = 7) or (pixelCurEnemy = 43) or
                   (pixelCurEnemy = 66)) then
+                  //Встреча с танком
                     begin
                       SetFillStyle(1, black);
-                      Bar(xEnemy, yEnemy, xEnemy - shTank + 3, yEnemy - shTank);
+                      Bar(xEnemy, yEnemy, xEnemy - shTank, yEnemy - shTank);
                       xTank := 250;
                       yTank := getmaxy - 50 - vsTank;
                       PutImage(xTank, yTank, tankForward^, 1);
+
+                      kLifes := kLifes - 1;
+                      Str(kLifes, kLifesStr);
+                      SetFillStyle(1, 25);
+                      Bar(200, 120, 220, 145);
+                      Count;
                     end
                   else if (pixelCurEnemy = 39) then
                   //Столкновение с бонусом
@@ -497,13 +500,13 @@ procedure Enemy(var xEnemy, yEnemy: integer; hEnemy: integer);
                 dirEnemy := 3
                 else if (xEnemy <= 250 + 2) then //Левая стена
                 dirEnemy := 1 + random(5 - 1)
-                else if ((xEnemy = xStenaVert + shStenaVert) and (yEnemy = 50)) then //1 Стоп-точка
+                else if ((xEnemy = xStenaVert + shStenaVert) and (yEnemy <= 50)) then //1 Стоп-точка
                 dirEnemy := 1 + random(5 - 1)
-                else if ((xEnemy = xStenaVert + 145 + shStenaVert) and (yEnemy = 50)) then //2 Стоп-точка
+                else if ((xEnemy = xStenaVert + 145 + shStenaVert) and (yEnemy <= 50)) then //2 Стоп-точка
                 dirEnemy := 1 + random(5 - 1)
-                else if ((xEnemy = xStenaVert + 577 + shBlock - 70) and (yEnemy = 50)) then //3 Стоп-точка
+                else if ((xEnemy = xStenaVert + 577 + shBlock - 70) and (yEnemy <= 50)) then //3 Стоп-точка
                 dirEnemy := 1 + random(5 - 1)
-                else if ((xEnemy = xStenaVert + 720 + shBlock - 70) and (yEnemy = 50)) then //4 Стоп-точка
+                else if ((xEnemy = xStenaVert + 720 + shBlock - 70) and (yEnemy <= 50)) then //4 Стоп-точка
                 dirEnemy := 1 + random(5 - 1)
                 else if ((xEnemy = xStenaVert + 720 + shBlock - 70) and (yEnemy = yStenaVert + vsStenaVert + 75 +
                 vsStenaVertSmall)) then //6 Стоп-точка
@@ -537,6 +540,38 @@ procedure Enemy(var xEnemy, yEnemy: integer; hEnemy: integer);
             end;
         end;
         UpdateGraph(UpdateNow);
+
+        if ((pixelCurPula = 21) or (pixelCurPula = 22) or (pixelCurPula = 23) or (pixelCurPula = 24)
+                or (pixelCurPula = 26) or (pixelCurPula = 27) or (pixelCurPula = 28)
+                or (pixelCurPula = 29) or (pixelCurPula = 30) or (pixelCurPula = 18))
+                then
+                //Попадание во врага
+                  begin
+                    PulaLog[i] := false;
+                    xPula := getmaxx;
+                    yPula := getmaxy;
+
+                    SetFillStyle(1, black);
+                    if ((dirEnemy = 2) or (dirEnemy = 4)) then
+                        Bar(xEnemy, yEnemy, xEnemy + vsEnemy, yEnemy + shEnemy)
+                    else if ((dirEnemy = 1) or (dirEnemy = 3)) then
+                        Bar(xEnemy, yEnemy, xEnemy + shEnemy, yEnemy + vsEnemy);
+
+                    xEnemy := -500;
+                    yEnemy := -500;
+
+                    xEnemy := xStenaVert + shStenaVert;
+                    yEnemy := 50;
+                    dirEnemy := 2 + random(4);
+
+                    kEnemies := kEnemies + 1;
+                    Str(kEnemies, kEnemiesStr);
+                    SetFillStyle(1, 25);
+                    Bar(200, 168, 220, 195);
+                    Count;
+                  end
+
+
         Delay(10);
       end;
   end;
@@ -545,7 +580,7 @@ procedure UprTank(var xTank, yTank: integer; shTank, vsTank, hTank: integer);
 var colWay: boolean;
 i: integer;
   begin
-      if (tankExist) then
+      if (tankExist = true) then
         begin
           ch := readkey();
             case ch of
@@ -574,6 +609,7 @@ i: integer;
                         else if ((pixelCur = 21) or (pixelCur = 22) or (pixelCur = 23) or (pixelCur = 24) or
                         (pixelCur = 26) or (pixelCur = 27) or (pixelCur = 28) or (pixelCur = 29) or
                         (pixelCur = 30) or (pixelCur = 18)) then
+                        //Встреча с врагом
                           begin
                             tankExist := false;
                             xTank := 250;
@@ -608,8 +644,6 @@ i: integer;
                       xTank := xTank - hTank;
 
                     PutImage(xTank, yTank, tankLeft^, 1);
-
-                    put := 'pTankLeft^';
                   end;
                 end;
               right:
@@ -637,6 +671,7 @@ i: integer;
                           else if ((pixelCur = 21) or (pixelCur = 22) or (pixelCur = 23) or (pixelCurPula = 24)
                           or (pixelCur = 26) or (pixelCur = 27) or (pixelCur = 28) or (pixelCur = 29) or
                           (pixelCur = 30) or (pixelCur = 18)) then
+                          //Встреча с врагом
                             begin
                               tankExist := false;
                               xTank := 250;
@@ -671,8 +706,6 @@ i: integer;
                          xTank := xTank + hTank;
 
                        PutImage(xTank, yTank, tankRight^, 1);
-
-                       put := 'pTankRight^';
                     end;
                 end;
               up:
@@ -699,6 +732,7 @@ i: integer;
                           else if ((pixelCur = 21) or (pixelCur = 22) or (pixelCur = 23) or (pixelCur = 24)
                           or (pixelCur = 26) or (pixelCur = 27) or (pixelCur = 28) or (pixelCur = 29) or
                           (pixelCur = 30) or (pixelCur = 18)) then
+                          //Встреча с врагом
                             begin
                               tankExist := false;
                               xTank := 250;
@@ -733,7 +767,6 @@ i: integer;
                        yTank := yTank - hTank;
 
                       PutImage(xTank, yTank, tankForward^, 1);
-                      put := 'pTankForward^';
                     end;
                 end;
               down:
@@ -759,7 +792,7 @@ i: integer;
                           else if ((pixelCur = 21) or (pixelCur = 22) or (pixelCur = 23) or
                           (pixelCur = 24) or (pixelCur = 26) or (pixelCur = 27) or (pixelCur = 28) or (pixelCur = 29)
                           or (pixelCur = 30) or (pixelCur = 18)) then
-                          //Заезд на врага
+                          //Встреча с врагом
                             begin
                               tankExist := false;
                               xTank := 250;
@@ -794,7 +827,6 @@ i: integer;
                         yTank := yTank + hTank;
 
                       PutImage(xTank, yTank, tankBack^, 1);
-                      put := 'pTankBack^';
                     end;
                  end;
               end;
@@ -818,10 +850,6 @@ procedure PoletPuli(var xPula, yPula: integer; hPula:integer; animPula: AnimatTy
                   SetColor(black);
                   SetFillStyle(1, black);
                   FillEllipse(xPula + 5, yPula, 10, 10);
-                  PutAnim(xPula - 4, yPula, explode, TransPut);
-                  SetColor(black);
-                  SetFillStyle(1, black);
-                  FillEllipse(xPula + 5, yPula, 10, 10);
 
                   PulaLog[i] := false;
                   xPula := getmaxx;
@@ -839,19 +867,12 @@ procedure PoletPuli(var xPula, yPula: integer; hPula:integer; animPula: AnimatTy
 
                     SetFillStyle(1, black);
                     if ((dirEnemy = 2) or (dirEnemy = 4)) then
-                      begin
-                        PutAnim(xEnemy, yEnemy, explode, TransPut);
-                        Bar(xEnemy, yEnemy, xEnemy + vsEnemy, yEnemy + shEnemy);
-                      end
+                        Bar(xEnemy, yEnemy, xEnemy + vsEnemy, yEnemy + shEnemy)
                     else if ((dirEnemy = 1) or (dirEnemy = 3)) then
-                      begin
-                        PutAnim(xEnemy, yEnemy, explode, TransPut);
                         Bar(xEnemy, yEnemy, xEnemy + shEnemy, yEnemy + vsEnemy);
-                      end;
 
                     xEnemy := -500;
                     yEnemy := -500;
-                    //EnemyExist := false;
 
                     xEnemy := xStenaVert + shStenaVert;
                     yEnemy := 50;
@@ -877,10 +898,6 @@ procedure PoletPuli(var xPula, yPula: integer; hPula:integer; animPula: AnimatTy
                   SetColor(black);
                   SetFillStyle(1, black);
                   FillEllipse(xPula + 5, yPula, 10, 10);
-                  PutAnim(xPula - 4, yPula, explode, TransPut);
-                  SetColor(black);
-                  SetFillStyle(1, black);
-                  FillEllipse(xPula + 5, yPula, 10, 10);
 
                   PulaLog[i] := false;
                   xPula := getmaxx;
@@ -898,15 +915,9 @@ procedure PoletPuli(var xPula, yPula: integer; hPula:integer; animPula: AnimatTy
 
                   SetFillStyle(1, black);
                   if ((dirEnemy = 2) or (dirEnemy = 4)) then
-                    begin
-                      PutAnim(xEnemy, yEnemy, explode, TransPut);
-                      Bar(xEnemy, yEnemy, xEnemy + shEnemy, yEnemy + vsEnemy);
-                    end
+                      Bar(xEnemy, yEnemy, xEnemy + shEnemy, yEnemy + vsEnemy)
                   else if ((dirEnemy = 1) or (dirEnemy = 3)) then
-                    begin
-                      PutAnim(xEnemy, yEnemy, explode, TransPut);
                       Bar(xEnemy, yEnemy, xEnemy + vsEnemy, yEnemy + shEnemy);
-                    end;
 
                   xEnemy := -500;
                   yEnemy := -500;
@@ -935,10 +946,6 @@ procedure PoletPuli(var xPula, yPula: integer; hPula:integer; animPula: AnimatTy
                   SetColor(black);
                   SetFillStyle(1, black);
                   FillEllipse(xPula + 5, yPula, 10, 10);
-                  PutAnim(xPula - 4, yPula, explode, TransPut);
-                  SetColor(black);
-                  SetFillStyle(1, black);
-                  FillEllipse(xPula + 5, yPula, 10, 10);
 
                   PulaLog[i] := false;
                   xPula := getmaxx;
@@ -953,15 +960,9 @@ procedure PoletPuli(var xPula, yPula: integer; hPula:integer; animPula: AnimatTy
                   begin
                   SetFillStyle(1, black);
                   if ((dirEnemy = 2) or (dirEnemy = 4)) then
-                    begin
-                      PutAnim(xEnemy, yEnemy, explode, TransPut);
                       Bar(xEnemy, yEnemy, xEnemy + vsEnemy, yEnemy + shEnemy)
-                    end
                   else if ((dirEnemy = 1) or (dirEnemy = 3)) then
-                    begin
-                      PutAnim(xEnemy, yEnemy, explode, TransPut);
                       Bar(xEnemy, yEnemy, xEnemy + shEnemy, yEnemy + vsEnemy);
-                    end;
 
                   xEnemy := -500;
                   yEnemy := -500;
@@ -994,10 +995,6 @@ procedure PoletPuli(var xPula, yPula: integer; hPula:integer; animPula: AnimatTy
                   SetColor(black);
                   SetFillStyle(1, black);
                   FillEllipse(xPula + 5, yPula, 10, 10);
-                  PutAnim(xPula - 4, yPula, explode, TransPut);
-                  SetColor(black);
-                  SetFillStyle(1, black);
-                  FillEllipse(xPula + 5, yPula, 10, 10);
 
                   PulaLog[i] := false;
                   xPula := getmaxx;
@@ -1011,15 +1008,9 @@ procedure PoletPuli(var xPula, yPula: integer; hPula:integer; animPula: AnimatTy
                   begin
                     SetFillStyle(1, black);
                     if ((dirEnemy = 2) or (dirEnemy = 4)) then
-                      begin
-                        PutAnim(xEnemy, yEnemy, explode, TransPut);
-                        Bar(xEnemy, yEnemy, xEnemy + shEnemy, yEnemy + vsEnemy);
-                      end
+                        Bar(xEnemy, yEnemy, xEnemy + shEnemy, yEnemy + vsEnemy)
                     else if ((dirEnemy = 1) or (dirEnemy = 3)) then
-                      begin
-                        PutAnim(xEnemy, yEnemy, explode, TransPut);
                         Bar(xEnemy, yEnemy, xEnemy + vsEnemy, yEnemy + shEnemy);
-                      end;
 
                     xEnemy := -500;
                     yEnemy := -500;
@@ -1047,8 +1038,6 @@ procedure PoletPuli(var xPula, yPula: integer; hPula:integer; animPula: AnimatTy
       pulaLog[i] := false
     else
       PutAnim(xPula,yPula,animPula,TransPut);
-
-    //UpdateGraph(updatenow);
 end;
 
 
@@ -1094,12 +1083,13 @@ procedure Game;
 
     Repeat
       Enemy(xEnemy, yEnemy, hEnemy);
-      if KeyPressed then begin
+      if KeyPressed then
+      begin
         ch := readkey;
         if (ch = #0) then
           UprTank(xTank, yTank, shTank, vsTank, hTank)
         else if (ch = probel) then
-          for i:= 1 to n do
+          for i := 1 to n do
             begin
               if (PulaLog[i] = false) then
                 begin
@@ -1170,7 +1160,7 @@ procedure Menu;
 
     Rectangle(getmaxx div 4, getmaxy div 3 - 80, (getmaxx div 4) * 3, (getmaxy div 3) * 2);
     UpdateGraph(UpdateOn);
-      //Передживжение курсора и заходы в пнукты меню
+      //Передвижение курсора и заходы в пнукты меню
       ch := readkey();
         if (ch = #0) then
           begin
@@ -1178,8 +1168,12 @@ procedure Menu;
             ch := readkey();
 
               case ch of
-                up: if np > 1 then np := np - 1;
-                down: if np < 3 then np := np + 1;
+                up:
+                  if np > 1
+                    then np := np - 1;
+                down:
+                  if np < 3
+                    then np := np + 1;
               end;
 
           end
@@ -1192,7 +1186,7 @@ procedure Menu;
                   3: Halt;
                 end;
             end;
-  end;
+          end;
 
 //Начало главной программы
 BEGIN
@@ -1200,10 +1194,9 @@ BEGIN
 Randomize;
 SetWindowSize(1300, 800);
 gd := d8bit;
-//gd := nopalette;
+gm := mCustom;
 //gd := 9;
 //gm := 11;
-gm := mCustom;
 InitGraph(gd, gm, 'Tank');
 InitData;
 InitPict;
@@ -1212,5 +1205,4 @@ Repeat
         Menu;
 Until 1 = 2;
 CloseGraph;
-
 END.
